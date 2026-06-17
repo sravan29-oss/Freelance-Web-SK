@@ -1,26 +1,333 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-space-grotesk);
 
-@theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+  .dark {
+    --background: #0a0a0f;
+    --foreground: #ffffff;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased overflow-x-hidden;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-md border border-white/[0.08];
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #222222;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
+
+/* Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.2);
+  color: inherit;
+}
+
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Custom Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SK BRAND SECTION — Glitch Effect
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sk-glitch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.sk-glitch {
+  position: relative;
+  display: inline-block;
+  animation: sk-glitch-skew 4s infinite linear alternate-reverse;
+}
+
+.sk-glitch::before,
+.sk-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sk-glitch::before {
+  animation: sk-glitch-1 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  filter: drop-shadow(-3px 0 #8b5cf6);
+}
+
+.sk-glitch::after {
+  animation: sk-glitch-2 2.5s infinite linear alternate-reverse;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  filter: drop-shadow(3px 0 #06b6d4);
+}
+
+@keyframes sk-glitch-1 {
+  0%, 95% { transform: translate(0); }
+  96% { transform: translate(-4px, 2px); }
+  97% { transform: translate(3px, -1px); }
+  98% { transform: translate(-2px, 1px); }
+  99% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes sk-glitch-2 {
+  0%, 93% { transform: translate(0); }
+  94% { transform: translate(3px, -2px); }
+  95% { transform: translate(-4px, 1px); }
+  96% { transform: translate(2px, 2px); }
+  97% { transform: translate(-3px, -1px); }
+  98%, 100% { transform: translate(0); }
+}
+
+@keyframes sk-glitch-skew {
+  0%, 96% { transform: skew(0deg); }
+  97% { transform: skew(1deg); }
+  98% { transform: skew(-0.5deg); }
+  99% { transform: skew(0.3deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SK BRAND SECTION — Marquee Ticker
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.sk-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.sk-marquee {
+  display: flex;
+  width: max-content;
+  animation: sk-marquee-scroll 25s linear infinite;
+}
+
+.sk-marquee:hover {
+  animation-play-state: paused;
+}
+
+.sk-marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+  flex-shrink: 0;
+}
+
+@keyframes sk-marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SK BRAND SECTION — Glow Pulse
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes sk-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1), 0 0 60px rgba(139, 92, 246, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.2), 0 0 120px rgba(139, 92, 246, 0.1);
+  }
+}
+
+@keyframes sk-orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TRUSTED BY — Logo Carousel
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.trusted-scroll-container {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.trusted-scroll-track {
+  display: flex;
+  width: max-content;
+  animation: trusted-scroll 40s linear infinite;
+}
+
+.trusted-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes trusted-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PROCESS SECTION — Connecting Line
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes process-line-fill {
+  from { height: 0; }
+  to { height: 100%; }
+}
+
+@keyframes process-line-fill-horizontal {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes process-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 var(--pulse-color, rgba(139, 92, 246, 0.4));
+  }
+  50% { 
+    box-shadow: 0 0 0 12px var(--pulse-color, rgba(139, 92, 246, 0));
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TECH CARD — Glow Effect
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes tech-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SHIMMER / SHINE Effects
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    currentColor 35%,
+    rgba(139, 92, 246, 0.8) 50%,
+    currentColor 65%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   GRADIENT MESH Background
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes gradient-mesh {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.gradient-mesh-bg {
+  background: linear-gradient(
+    -45deg,
+    rgba(139, 92, 246, 0.03),
+    rgba(6, 182, 212, 0.03),
+    rgba(236, 72, 153, 0.03),
+    rgba(16, 185, 129, 0.03)
+  );
+  background-size: 400% 400%;
+  animation: gradient-mesh 15s ease infinite;
+}
+
+.dark .gradient-mesh-bg {
+  background: linear-gradient(
+    -45deg,
+    rgba(139, 92, 246, 0.06),
+    rgba(6, 182, 212, 0.06),
+    rgba(236, 72, 153, 0.06),
+    rgba(16, 185, 129, 0.06)
+  );
+  background-size: 400% 400%;
+  animation: gradient-mesh 15s ease infinite;
 }
