@@ -79,7 +79,7 @@ export default function HeroSection() {
         >
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-gray-700 dark:text-white/70 text-sm font-medium">
-            Trusted by 80+ businesses across India
+            Trusted by 2+ businesses across India
           </span>
           <span className="hidden sm:inline text-gray-400 dark:text-white/30">•</span>
           <span className="hidden sm:inline text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
@@ -89,21 +89,31 @@ export default function HeroSection() {
 
 
 
+        {/* Massive SK Background Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] select-none pointer-events-none -z-10 flex items-center justify-center w-full overflow-hidden">
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            className="text-[15rem] sm:text-[25rem] md:text-[35rem] font-black text-gray-900/5 dark:text-white/[0.03] tracking-tighter leading-none"
+          >
+            SK
+          </motion.span>
+        </div>
+
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 md:mb-8"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 md:mb-8 relative z-10"
         >
-          <span className="text-black dark:text-white">We Craft Digital</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 font-black drop-shadow-sm">SK DIGITAL</span>
           <br />
-          <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-            Experiences That
-          </span>
+          <span className="text-black dark:text-white">Crafts Experiences</span>
           <br />
           <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-            Drive Growth
+            That Drive Growth
           </span>
         </motion.h1>
 

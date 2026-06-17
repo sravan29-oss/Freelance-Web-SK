@@ -137,10 +137,8 @@ export default function SKBrandSection() {
               {/* Glitch Headline */}
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                 Engineering{" "}
-                <span className="sk-glitch-wrapper">
-                  <span className="sk-glitch text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 dark:from-violet-400 dark:to-cyan-400" data-text="Digital Excellence">
-                    Digital Excellence
-                  </span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 dark:from-violet-400 dark:to-cyan-400">
+                  Digital Excellence
                 </span>
               </h2>
 

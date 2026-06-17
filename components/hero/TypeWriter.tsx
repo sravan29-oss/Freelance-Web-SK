@@ -40,14 +40,9 @@ export default function TypeWriter() {
 
   return (
     <span className="inline-flex items-center">
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={displayedText}
-          className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent"
-        >
-          {displayedText}
-        </motion.span>
-      </AnimatePresence>
+      <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+        {displayedText}
+      </span>
       <motion.span
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}

@@ -117,10 +117,8 @@ export default function FounderSection() {
               <div className="mt-12 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center gap-6 justify-between">
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-mono tracking-tight mb-1">
-                    <span className="sk-glitch-wrapper mr-2">
-                      <span className="sk-glitch text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500" data-text="SK">
-                        SK
-                      </span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 mr-2">
+                      SK
                     </span>
                     | Sravan Kumar Naredla
                   </h3>
