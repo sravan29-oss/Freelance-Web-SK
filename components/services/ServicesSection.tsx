@@ -4,6 +4,7 @@ import { useRef, MouseEvent } from "react";
 import { motion, useInView } from "framer-motion";
 import { SERVICES } from "@/lib/constants";
 import SectionReveal from "@/components/effects/SectionReveal";
+import TextReveal from "@/components/effects/TextReveal";
 import { ArrowUpRight } from "lucide-react";
 
 function ServiceCard({
@@ -45,9 +46,17 @@ function ServiceCard({
     >
       <div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
+        onMouseMove={(e) => {
+          handleMouseMove(e);
+          // Spotlight effect
+          const rect = cardRef.current?.getBoundingClientRect();
+          if (rect && cardRef.current) {
+            cardRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            cardRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+          }
+        }}
         onMouseLeave={handleMouseLeave}
-        className="group relative h-full rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] p-6 md:p-8 transition-all duration-500 ease-out hover:border-black/[0.15] dark:hover:border-white/[0.15] hover:bg-black/[0.05] dark:hover:bg-white/[0.05] hover:shadow-[0_8px_32px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_8px_32px_rgba(255,255,255,0.02)] overflow-hidden backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+        className="gradient-border-card card-spotlight group relative h-full rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/[0.08] p-6 md:p-8 transition-all duration-500 ease-out hover:border-transparent hover:bg-black/[0.05] dark:hover:bg-white/[0.05] hover:shadow-[0_8px_32px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_8px_32px_rgba(255,255,255,0.02)] overflow-hidden backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
         style={{
           transition: "transform 0.15s ease-out, border-color 0.5s, background-color 0.5s",
         }}
@@ -122,10 +131,12 @@ export default function ServicesSection() {
               What We Offer
             </motion.p>
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Enterprise-Grade{" "}
-              <span className="bg-gradient-to-r from-violet-600 to-cyan-500 dark:from-violet-400 dark:to-cyan-400 bg-clip-text text-transparent">
+              <TextReveal as="span" className="text-gray-900 dark:text-white" staggerChildren={0.06}>
+                Enterprise-Grade
+              </TextReveal>{" "}
+              <TextReveal as="span" className="bg-gradient-to-r from-violet-600 to-cyan-500 dark:from-violet-400 dark:to-cyan-400 bg-clip-text text-transparent" delay={0.3} staggerChildren={0.06}>
                 Solutions
-              </span>
+              </TextReveal>
             </h2>
             <p className="text-gray-600 dark:text-white/40 max-w-2xl mx-auto text-lg">
               End-to-end digital solutions built with cutting-edge technologies, designed to scale with your business.

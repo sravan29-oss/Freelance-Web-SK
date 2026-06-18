@@ -11,11 +11,13 @@ const CustomCursor = dynamic(() => import("@/components/effects/CustomCursor"), 
 const MouseGlow = dynamic(() => import("@/components/effects/MouseGlow"), { ssr: false });
 const Navbar = dynamic(() => import("@/components/layout/Navbar"), { ssr: false });
 const Footer = dynamic(() => import("@/components/layout/Footer"), { ssr: false });
+const ScrollProgress = dynamic(() => import("@/components/effects/ScrollProgress"), { ssr: false });
 
 export default function ClientShell({ children }: { children: React.ReactNode }) {
   return (
     <SmoothScrollProvider>
       <LoadingScreen />
+      <ScrollProgress />
       <CustomCursor />
       <MouseGlow />
       <Navbar />

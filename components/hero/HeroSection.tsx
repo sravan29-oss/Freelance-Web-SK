@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import ParticleCanvas from "./ParticleCanvas";
+import AuroraBackground from "./AuroraBackground";
 import TypeWriter from "./TypeWriter";
 import StatsCounter from "./StatsCounter";
+import MagneticButton from "@/components/effects/MagneticButton";
+import TextReveal from "@/components/effects/TextReveal";
 import { ArrowDown, Sparkles, Globe, Shield, Zap } from "lucide-react";
 
 export default function HeroSection() {
@@ -33,7 +35,8 @@ export default function HeroSection() {
       ref={sectionRef}
       className="relative min-h-[110vh] flex items-center justify-center overflow-hidden"
     >
-      <ParticleCanvas />
+      {/* Aurora WebGL Background */}
+      <AuroraBackground />
 
       {/* Gradient Orbs */}
       <div className="absolute top-1/4 -left-10 w-72 h-72 bg-violet-600/10 rounded-full blur-[100px] animate-pulse" />
@@ -101,27 +104,47 @@ export default function HeroSection() {
           </motion.span>
         </div>
 
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 md:mb-8 relative z-10"
+        {/* Headline — with text reveal animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 font-black drop-shadow-sm">SK DIGITAL</span>
-          <br />
-          <span className="text-black dark:text-white">Crafts Experiences</span>
-          <br />
-          <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-            That Drive Growth
-          </span>
-        </motion.h1>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 md:mb-8 relative z-10">
+            <TextReveal
+              as="span"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-cyan-500 font-black drop-shadow-sm"
+              delay={0.3}
+              staggerChildren={0.08}
+            >
+              SK DIGITAL
+            </TextReveal>
+            <br />
+            <TextReveal
+              as="span"
+              className="text-black dark:text-white"
+              delay={0.6}
+              staggerChildren={0.06}
+            >
+              Crafts Experiences
+            </TextReveal>
+            <br />
+            <TextReveal
+              as="span"
+              className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent"
+              delay={0.9}
+              staggerChildren={0.06}
+            >
+              That Drive Growth
+            </TextReveal>
+          </h1>
+        </motion.div>
 
         {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
           className="text-lg md:text-xl text-gray-600 dark:text-white/60 max-w-2xl mx-auto mb-10 md:mb-12 font-light leading-relaxed"
         >
           A premium digital agency building high-performance solutions for{" "}
@@ -129,33 +152,35 @@ export default function HeroSection() {
           {" "}— from concept to scale.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons — with magnetic effect */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 1.4 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-20 md:mb-32"
         >
-          <button
+          <MagneticButton
             onClick={() => handleNavClick("#projects")}
-            className="group relative px-8 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-medium rounded-full overflow-hidden hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-300"
+            className="group relative px-8 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-medium rounded-full overflow-hidden hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-300 cursor-pointer"
+            strength={0.4}
           >
             <span className="relative z-10 flex items-center gap-2">
               Explore Our Work
               <ArrowDown size={16} className="group-hover:translate-y-1 transition-transform" />
             </span>
             <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
+          </MagneticButton>
 
-          <button
+          <MagneticButton
             onClick={() => handleNavClick("#contact")}
-            className="group px-8 py-4 bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white font-medium rounded-full border border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+            className="group px-8 py-4 bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white font-medium rounded-full border border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
+            strength={0.3}
           >
             <span className="flex items-center gap-2">
               <Sparkles size={16} className="text-violet-400 group-hover:text-cyan-400 transition-colors" />
               Start a Project
             </span>
-          </button>
+          </MagneticButton>
         </motion.div>
 
         {/* Stats */}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/constants";
 import SectionReveal from "@/components/effects/SectionReveal";
+import TextReveal from "@/components/effects/TextReveal";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 
 function ProjectCard({ project, index }: { project: typeof PROJECTS[0], index: number }) {
@@ -123,10 +124,12 @@ export default function ProjectsSection() {
               Our Portfolio
             </motion.p>
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Client Success{" "}
-              <span className="bg-gradient-to-r from-cyan-600 to-violet-600 dark:from-cyan-400 dark:to-violet-400 bg-clip-text text-transparent">
+              <TextReveal as="span" className="text-gray-900 dark:text-white" staggerChildren={0.06}>
+                Client Success
+              </TextReveal>{" "}
+              <TextReveal as="span" className="bg-gradient-to-r from-cyan-600 to-violet-600 dark:from-cyan-400 dark:to-violet-400 bg-clip-text text-transparent" delay={0.3} staggerChildren={0.06}>
                 Stories
-              </span>
+              </TextReveal>
             </h2>
             <p className="text-gray-500 dark:text-white/40 max-w-2xl mx-auto text-lg">
               Real case studies from real businesses. Measurable results that speak louder than promises.

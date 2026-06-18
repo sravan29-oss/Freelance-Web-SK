@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CONTACT_INFO, BUSINESS_TYPES, BUDGET_RANGES } from "@/lib/constants";
 import SectionReveal from "@/components/effects/SectionReveal";
+import TextReveal from "@/components/effects/TextReveal";
 import { Send, MessageSquare, Calendar, Mail, ArrowRight, X, Clock } from "lucide-react";
 
 const TIME_SLOTS = [
@@ -144,10 +145,12 @@ export default function ContactSection() {
               <span className="w-8 h-[2px] bg-violet-500 dark:bg-violet-400" />
             </motion.p>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Ready to Transform Your{" "}
-              <span className="bg-gradient-to-r from-violet-500 to-cyan-500 dark:from-violet-400 dark:to-cyan-400 bg-clip-text text-transparent">
+              <TextReveal as="span" className="text-gray-900 dark:text-white" staggerChildren={0.05}>
+                Ready to Transform Your
+              </TextReveal>{" "}
+              <TextReveal as="span" className="bg-gradient-to-r from-violet-500 to-cyan-500 dark:from-violet-400 dark:to-cyan-400 bg-clip-text text-transparent" delay={0.4} staggerChildren={0.06}>
                 Business?
-              </span>
+              </TextReveal>
             </h2>
             <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-white/60 bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-black/5 dark:border-white/10 px-4 py-2 rounded-full w-fit mx-auto shadow-sm">
               <Clock size={16} className="text-emerald-500" />
