@@ -11,13 +11,6 @@ export default function AIChatWidget() {
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: "/api/chat",
-    initialMessages: [
-      {
-        id: "welcome-message",
-        role: "assistant",
-        content: "Hi there! I'm the SK Digital AI assistant. How can I help you today?",
-      },
-    ],
   });
 
   // Auto-scroll to bottom of messages
@@ -74,8 +67,20 @@ export default function AIChatWidget() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 text-white">
-              <div className="text-xs text-gray-500">Debug: {messages.length} messages</div>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              
+              {/* Static Welcome Message */}
+              <div className="flex justify-start">
+                <div className="flex gap-3 max-w-[85%] flex-row">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-violet-600 to-cyan-600 text-white">
+                    <Bot size={14} />
+                  </div>
+                  <div className="px-4 py-2.5 rounded-2xl text-sm whitespace-pre-wrap leading-relaxed bg-violet-50 dark:bg-violet-500/10 text-gray-800 dark:text-gray-200 border border-violet-100 dark:border-violet-500/20 rounded-tl-sm">
+                    Hi there! I'm the SK Digital AI assistant. How can I help you today?
+                  </div>
+                </div>
+              </div>
+
               {messages.map((m) => (
                 <div
                   key={m.id}
