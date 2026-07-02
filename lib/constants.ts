@@ -47,10 +47,10 @@ export interface Stat {
 }
 
 export const STATS: Stat[] = [
-  { value: 2, suffix: "+", label: "Projects Delivered" },
-  { value: 2, suffix: "+", label: "Happy Clients" },
-  { value: 4, suffix: "+", label: "Months Experience" },
-  { value: 99.9, suffix: "%", label: "Uptime Guarantee" },
+  { value: 12, suffix: "+", label: "Brand Profiles" },
+  { value: 6, suffix: "", label: "Service Lines" },
+  { value: 4, suffix: "", label: "Case Studies" },
+  { value: 99.9, suffix: "%", label: "Reliability Focus" },
 ];
 
 // ── Typewriter Words ────────────────────────────────────────
@@ -319,49 +319,49 @@ export const BENEFITS: Benefit[] = [
   {
     title: "Rapid Delivery",
     description:
-      "Agile sprints with transparent timelines. Your MVP goes live in as little as 2 weeks without compromising quality.",
+      "Lean sprint planning with transparent milestones so your product moves quickly without sacrificing craft.",
     icon: Zap,
-    stat: "2-Week Sprints",
+    stat: "Sprint-Based Delivery",
     gradient: "from-amber-500/20 to-orange-500/5",
   },
   {
     title: "Enterprise Security",
     description:
-      "SOC2-aligned practices, encrypted data pipelines, and regular security audits to protect your business.",
+      "Security-minded development, protected data flows, and dependable deployment practices shaped for serious businesses.",
     icon: Shield,
-    stat: "99.9% Uptime SLA",
+    stat: "Audit-Ready Workflows",
     gradient: "from-emerald-500/20 to-teal-500/5",
   },
   {
     title: "Dedicated Team",
     description:
-      "A cross-functional team of designers, developers, and strategists assigned exclusively to your project.",
+      "Close collaboration across design, development, and strategy with direct founder involvement throughout delivery.",
     icon: Users,
-    stat: "24/7 Support",
+    stat: "Founder-Led Execution",
     gradient: "from-violet-500/20 to-purple-500/5",
   },
   {
     title: "Award-Winning Design",
     description:
-      "UI/UX that wins hearts and converts users. Research-driven design systems that scale with your brand.",
+      "Interfaces designed to earn trust, clarify complex products, and improve conversion across every touchpoint.",
     icon: Award,
-    stat: "4.9★ Average Rating",
+    stat: "Conversion-Focused UI",
     gradient: "from-pink-500/20 to-rose-500/5",
   },
   {
     title: "Scalable Architecture",
     description:
-      "Cloud-native solutions built to handle 10x traffic surges. Microservices, CDN, and auto-scaling from day one.",
+      "Cloud-ready foundations built for growth, with performance headroom and maintainable systems from day one.",
     icon: Layers,
-    stat: "10x Scale Ready",
+    stat: "Scale-Ready Systems",
     gradient: "from-cyan-500/20 to-blue-500/5",
   },
   {
     title: "Proven Track Record",
     description:
-      "150+ successful projects across education, healthcare, fintech, and e-commerce. Trusted by industry leaders.",
+      "Experience across education, healthcare, hospitality, and emerging tech with solutions tailored to each sector.",
     icon: TrendingUp,
-    stat: "150+ Projects",
+    stat: "Cross-Sector Delivery",
     gradient: "from-indigo-500/20 to-blue-500/5",
   },
 ];

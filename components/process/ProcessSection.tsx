@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { PROCESS_STEPS } from "@/lib/constants";
 import SectionReveal from "@/components/effects/SectionReveal";
+import { PROCESS_STEPS } from "@/lib/constants";
 
 function StepCard({
   step,
@@ -20,70 +20,64 @@ function StepCard({
 
   return (
     <div ref={cardRef} className="relative flex flex-col items-center">
-      {/* Vertical connecting line (hidden on last item, hidden on mobile) */}
       {!isLast && (
-        <div className="hidden lg:block absolute top-[72px] left-1/2 -translate-x-1/2 w-full h-[2px] z-0">
+        <div className="absolute left-1/2 top-10 hidden h-[2px] w-full -translate-x-1/2 lg:block">
           <motion.div
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 + index * 0.2 }}
-            className="h-full bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/10 origin-left"
-            style={{
-              marginLeft: "50%",
-            }}
+            transition={{ duration: 0.8, delay: 0.45 + index * 0.18 }}
+            className="h-full origin-left bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            style={{ marginLeft: "50%" }}
           />
         </div>
       )}
 
-      {/* Step card */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-        transition={{ duration: 0.7, delay: index * 0.15 }}
-        className="relative z-10 group w-full"
+        initial={{ opacity: 0, y: 36 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
+        transition={{ duration: 0.65, delay: index * 0.12 }}
+        className="group relative z-10 w-full"
       >
-        {/* Number badge */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={isInView ? { scale: 1 } : { scale: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 + index * 0.15, type: "spring" }}
-          className="w-16 h-16 mx-auto mb-6 rounded-2xl flex items-center justify-center relative"
-          style={{
-            background: `linear-gradient(135deg, ${step.color}20, ${step.color}05)`,
-            border: `1px solid ${step.color}30`,
-          }}
-        >
-          {/* Pulse ring */}
+        <div className="premium-panel h-full p-6 text-center md:p-7">
           <motion.div
-            animate={{
-              boxShadow: [
-                `0 0 0 0 ${step.color}40`,
-                `0 0 0 12px ${step.color}00`,
-              ],
+            initial={{ scale: 0 }}
+            animate={isInView ? { scale: 1 } : { scale: 0 }}
+            transition={{ duration: 0.45, delay: 0.25 + index * 0.12, type: "spring" }}
+            className="relative mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl"
+            style={{
+              background: `linear-gradient(135deg, ${step.color}26, ${step.color}0d)`,
+              border: `1px solid ${step.color}40`,
             }}
-            transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-            className="absolute inset-0 rounded-2xl"
-          />
-          <Icon size={24} style={{ color: step.color }} />
-        </motion.div>
+          >
+            <motion.div
+              animate={{
+                boxShadow: [`0 0 0 0 ${step.color}45`, `0 0 0 14px ${step.color}00`],
+              }}
+              transition={{ duration: 2.1, repeat: Infinity, delay: index * 0.25 }}
+              className="absolute inset-0 rounded-2xl"
+            />
+            <Icon size={24} style={{ color: step.color }} />
+          </motion.div>
 
-        {/* Step number */}
-        <div
-          className="text-center mb-3 text-xs font-bold tracking-[0.3em] uppercase"
-          style={{ color: step.color }}
-        >
-          Step {step.number}
+          <span
+            className="rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em]"
+            style={{
+              color: step.color,
+              borderColor: `${step.color}40`,
+              backgroundColor: `${step.color}12`,
+            }}
+          >
+            Step {step.number}
+          </span>
+
+          <h4 className="mt-5 text-2xl font-bold tracking-tight text-gray-950 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-violet-500 group-hover:to-cyan-500 group-hover:bg-clip-text dark:text-white">
+            {step.title}
+          </h4>
+
+          <p className="section-copy mx-auto mt-4 max-w-[18rem] text-sm md:text-base">
+            {step.description}
+          </p>
         </div>
-
-        {/* Title */}
-        <h4 className="text-xl font-bold text-gray-900 dark:text-white text-center mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-cyan-400 transition-all duration-300">
-          {step.title}
-        </h4>
-
-        {/* Description */}
-        <p className="text-gray-500 dark:text-white/40 text-sm leading-relaxed text-center max-w-[280px] mx-auto">
-          {step.description}
-        </p>
       </motion.div>
     </div>
   );
@@ -91,32 +85,39 @@ function StepCard({
 
 export default function ProcessSection() {
   return (
-    <section id="process" className="relative py-32 md:py-40 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gray-50 dark:bg-[#060609]" />
-      <div className="absolute inset-0 gradient-mesh-bg" />
+    <section id="process" className="relative py-28 md:py-36">
+      <div className="absolute inset-0 bg-gray-50/60 dark:bg-[#060609]" />
+      <div className="absolute inset-0 gradient-mesh-bg opacity-70" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-shell relative z-10">
         <SectionReveal>
-          <div className="text-center mb-20 md:mb-28">
-            <motion.p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-4">
-              How We Work
-            </motion.p>
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Our Proven{" "}
-              <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                Methodology
-              </span>
-            </h2>
-            <p className="text-gray-500 dark:text-white/40 max-w-2xl mx-auto text-lg">
-              A battle-tested process refined over 150+ projects. Predictable
-              timelines, transparent communication, exceptional results.
-            </p>
+          <div className="mb-16 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+            <div>
+              <span className="section-kicker">How We Work</span>
+              <h2 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-gray-950 dark:text-white md:text-6xl">
+                Structured delivery
+                <br />
+                <span className="bg-gradient-to-r from-violet-500 to-cyan-500 bg-clip-text text-transparent">
+                  with premium control
+                </span>
+              </h2>
+            </div>
+
+            <div className="premium-panel p-6 md:p-7">
+              <p className="section-copy text-base md:text-lg">
+                Clear phases, clean handoffs, and visible progress help the entire
+                engagement feel organized, senior, and trustworthy.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <span className="metric-chip">Discovery to launch</span>
+                <span className="metric-chip">Transparent milestones</span>
+                <span className="metric-chip">Build-ready process</span>
+              </div>
+            </div>
           </div>
         </SectionReveal>
 
-        {/* Process steps grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {PROCESS_STEPS.map((step, index) => (
             <StepCard
               key={step.number}
@@ -127,28 +128,30 @@ export default function ProcessSection() {
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-20"
+          transition={{ duration: 0.6, delay: 0.65 }}
+          className="mt-14 flex flex-col items-start justify-between gap-5 rounded-[2rem] border border-black/8 bg-white/76 px-6 py-6 shadow-[0_18px_50px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/8 dark:bg-white/[0.04] dark:shadow-none md:flex-row md:items-center"
         >
-          <p className="text-gray-400 dark:text-white/30 text-sm mb-6">
-            Average project delivery:{" "}
-            <span className="text-violet-400 font-semibold">4–8 weeks</span>
-          </p>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-violet-500 dark:text-violet-300">
+              Delivery cadence
+            </p>
+            <p className="section-copy mt-2 text-sm md:text-base">
+              Clear ownership, practical reviews, and a launch path that keeps
+              stakeholders confident at every step.
+            </p>
+          </div>
+
           <motion.button
-            onClick={() => {
-              const el = document.querySelector("#contact");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white font-medium rounded-full border border-black/10 dark:border-white/10 hover:border-violet-500/30 hover:bg-violet-500/5 dark:hover:bg-violet-500/10 transition-all duration-300"
+            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="rounded-full bg-gray-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-600 dark:bg-white dark:text-gray-950 dark:hover:bg-violet-400"
           >
-            Start Your Project →
+            Start Your Project
           </motion.button>
         </motion.div>
       </div>

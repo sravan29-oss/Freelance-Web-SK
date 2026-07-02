@@ -3,103 +3,134 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PROJECTS, PROJECT_CATEGORIES } from "@/lib/constants";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import SectionReveal from "@/components/effects/SectionReveal";
 import TextReveal from "@/components/effects/TextReveal";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { PROJECT_CATEGORIES, PROJECTS } from "@/lib/constants";
 
-function ProjectCard({ project, index }: { project: typeof PROJECTS[0], index: number }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof PROJECTS)[0];
+  index: number;
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
-
+  const y = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.96, 1, 1, 0.96]);
   const isEven = index % 2 === 0;
 
   return (
     <motion.div
       ref={cardRef}
       style={{ opacity, scale }}
-      className="relative mb-32 md:mb-48 last:mb-0 group"
+      className="group relative mb-12 last:mb-0"
     >
-      <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-24 items-center`}>
-        {/* Image mockup container */}
-        <div className="w-full lg:w-1/2 relative">
-          <motion.div style={{ y }} className="relative z-10 w-full aspect-[4/3] rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl bg-white dark:bg-[#0d0d14]">
-            {/* Glossy reflection overlay */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent z-20 pointer-events-none" />
-            
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+      <div className="premium-panel overflow-hidden p-4 md:p-6 lg:p-8">
+        <div
+          className={`flex flex-col items-center gap-10 lg:gap-16 ${
+            isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+          }`}
+        >
+          <div className="relative w-full lg:w-1/2">
+            <motion.div
+              style={{ y }}
+              className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-black/8 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#0d0d14] dark:shadow-[0_18px_50px_rgba(0,0,0,0.35)]"
+            >
+              <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+              />
+              <div className="absolute left-4 top-4 z-30 rounded-full border border-black/10 bg-white/84 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-gray-700 backdrop-blur-xl dark:border-white/10 dark:bg-black/45 dark:text-white/70">
+                {project.category}
+              </div>
+            </motion.div>
+
+            <div
+              className={`pointer-events-none absolute left-1/2 top-1/2 -z-10 h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r ${project.gradient} opacity-30 blur-[100px] transition-opacity duration-700 group-hover:opacity-50`}
             />
-            
-            {/* Category Badge */}
-            <div className="absolute top-4 left-4 z-30 px-3 py-1 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-black/10 dark:border-white/10 text-xs text-gray-800 dark:text-white/80 uppercase tracking-wider">
-              {project.category}
-            </div>
-          </motion.div>
-          
-          {/* Ambient Glow behind image */}
-          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r ${project.gradient} rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-700 -z-10`} />
-        </div>
-
-        {/* Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center">
-          <div className={`inline-flex w-fit items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.05] mb-6 text-sm`}>
-            <span className={`w-2 h-2 rounded-full bg-gradient-to-r ${project.gradient}`} />
-            <span className="text-gray-600 dark:text-white/60">Case Study {String(index + 1).padStart(2, '0')}</span>
-          </div>
-          
-          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-gray-500 dark:group-hover:from-white dark:group-hover:to-white/50 transition-all duration-300">
-            {project.title}
-          </h3>
-
-          <div className="space-y-6 mb-8">
-            <div>
-              <h4 className="text-gray-800 dark:text-white/80 font-medium mb-2 text-sm uppercase tracking-wider">The Challenge</h4>
-              <p className="text-gray-500 dark:text-white/40 leading-relaxed text-sm md:text-base">{project.challenge}</p>
-            </div>
-            <div>
-              <h4 className="text-gray-800 dark:text-white/80 font-medium mb-2 text-sm uppercase tracking-wider">Our Solution</h4>
-              <p className="text-gray-500 dark:text-white/40 leading-relaxed text-sm md:text-base">{project.solution}</p>
-            </div>
           </div>
 
-          <div className="mb-8">
-            <h4 className="text-gray-800 dark:text-white/80 font-medium mb-4 text-sm uppercase tracking-wider">Results</h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {project.results.map((result, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <CheckCircle2 size={18} className="text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
-                  <span className="text-gray-500 dark:text-white/50 text-sm">{result}</span>
-                </div>
+          <div className="w-full lg:w-1/2">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <span className="rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.22em] text-gray-500 dark:border-white/8 dark:bg-white/[0.03] dark:text-white/42">
+                Case Study {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="metric-chip">Outcome-led execution</span>
+            </div>
+
+            <h3 className="text-3xl font-black tracking-tight text-gray-950 transition-all duration-300 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-gray-950 group-hover:to-gray-600 group-hover:bg-clip-text dark:text-white dark:group-hover:from-white dark:group-hover:to-white/55 md:text-4xl">
+              {project.title}
+            </h3>
+
+            <div className="mt-8 grid gap-6">
+              <div className="rounded-[1.5rem] border border-black/6 bg-black/[0.02] p-5 dark:border-white/6 dark:bg-white/[0.02]">
+                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-gray-500 dark:text-white/40">
+                  The Challenge
+                </p>
+                <p className="section-copy mt-3 text-sm md:text-base">
+                  {project.challenge}
+                </p>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-black/6 bg-black/[0.02] p-5 dark:border-white/6 dark:bg-white/[0.02]">
+                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-gray-500 dark:text-white/40">
+                  Our Solution
+                </p>
+                <p className="section-copy mt-3 text-sm md:text-base">
+                  {project.solution}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-gray-500 dark:text-white/40">
+                Results
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {project.results.map((result) => (
+                  <div
+                    key={result}
+                    className="flex items-start gap-3 rounded-2xl border border-black/6 bg-white/70 px-4 py-3 text-sm text-gray-600 dark:border-white/6 dark:bg-white/[0.03] dark:text-white/55"
+                  >
+                    <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-emerald-500" />
+                    <span>{result}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-full border border-black/8 bg-black/[0.03] px-3 py-2 text-xs font-semibold text-gray-500 dark:border-white/8 dark:bg-white/[0.03] dark:text-white/45"
+                >
+                  {tech}
+                </span>
               ))}
             </div>
-          </div>
 
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.technologies.map(tech => (
-              <span key={tech} className="px-3 py-1 rounded-md bg-black/5 dark:bg-white/[0.03] border border-black/10 dark:border-white/[0.05] text-gray-500 dark:text-white/50 text-xs">
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <button className={`w-fit group/btn flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r ${project.gradient} text-white text-sm font-medium hover:shadow-lg transition-all duration-300 relative overflow-hidden`}>
-            <span className="relative z-10 flex items-center gap-2">
+            <button
+              type="button"
+              className="group/btn mt-8 inline-flex items-center gap-2 rounded-full bg-gray-950 px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(15,23,42,0.16)] transition-all duration-300 hover:bg-violet-600 dark:bg-white dark:text-gray-950 dark:hover:bg-violet-400"
+            >
               View Case Study
-              <ArrowUpRight size={16} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
-          </button>
+              <ArrowUpRight
+                size={16}
+                className="transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -109,50 +140,69 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[0], index: n
 export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredProjects = activeCategory === "All"
-    ? PROJECTS
-    : PROJECTS.filter(p => p.category === activeCategory);
+  const filteredProjects =
+    activeCategory === "All"
+      ? PROJECTS
+      : PROJECTS.filter((project) => project.category === activeCategory);
 
   return (
-    <section id="projects" className="relative py-32 md:py-40 overflow-hidden">
-      <div className="absolute inset-0 bg-white dark:bg-[#060609]" />
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="relative py-28 md:py-36">
+      <div className="absolute inset-0 bg-white/40 dark:bg-[#060609]" />
+
+      <div className="section-shell relative z-10">
         <SectionReveal>
-          <div className="text-center mb-16 md:mb-20">
-            <motion.p className="text-cyan-600 dark:text-cyan-400 text-sm font-medium tracking-widest uppercase mb-4">
-              Our Portfolio
-            </motion.p>
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              <TextReveal as="span" className="text-gray-900 dark:text-white" staggerChildren={0.06}>
-                Client Success
-              </TextReveal>{" "}
-              <TextReveal as="span" className="bg-gradient-to-r from-cyan-600 to-violet-600 dark:from-cyan-400 dark:to-violet-400 bg-clip-text text-transparent" delay={0.3} staggerChildren={0.06}>
-                Stories
-              </TextReveal>
-            </h2>
-            <p className="text-gray-500 dark:text-white/40 max-w-2xl mx-auto text-lg">
-              Real case studies from real businesses. Measurable results that speak louder than promises.
-            </p>
+          <div className="mb-16 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+            <div>
+              <span className="section-kicker">Our Portfolio</span>
+              <h2 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-gray-950 dark:text-white md:text-6xl">
+                <TextReveal
+                  as="span"
+                  className="text-gray-950 dark:text-white"
+                  staggerChildren={0.06}
+                >
+                  Client success stories
+                </TextReveal>
+                <br />
+                <TextReveal
+                  as="span"
+                  className="bg-gradient-to-r from-cyan-600 to-violet-600 bg-clip-text text-transparent dark:from-cyan-400 dark:to-violet-400"
+                  delay={0.28}
+                  staggerChildren={0.06}
+                >
+                  presented like real case studies
+                </TextReveal>
+              </h2>
+            </div>
+
+            <div className="premium-panel p-6 md:p-7">
+              <p className="section-copy text-base md:text-lg">
+                These showcase projects are framed to communicate trust, outcomes,
+                and execution quality the way serious clients expect.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <span className="metric-chip">4 featured stories</span>
+                <span className="metric-chip">Clear business outcomes</span>
+                <span className="metric-chip">Presentation-ready portfolio</span>
+              </div>
+            </div>
           </div>
         </SectionReveal>
 
-        {/* Category Filter Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-16 md:mb-24"
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-14 flex flex-wrap gap-3"
         >
           {PROJECT_CATEGORIES.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg shadow-violet-500/20"
-                  : "bg-black/5 dark:bg-white/5 text-gray-600 dark:text-white/50 border border-black/10 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10"
+                  ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-[0_18px_36px_rgba(139,92,246,0.2)]"
+                  : "border border-black/8 bg-white/80 text-gray-600 backdrop-blur-xl hover:border-black/14 hover:text-gray-950 dark:border-white/8 dark:bg-white/[0.04] dark:text-white/55 dark:hover:border-white/14 dark:hover:text-white"
               }`}
             >
               {category}

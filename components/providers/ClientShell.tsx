@@ -12,6 +12,7 @@ const MouseGlow = dynamic(() => import("@/components/effects/MouseGlow"), { ssr:
 const Navbar = dynamic(() => import("@/components/layout/Navbar"), { ssr: false });
 const Footer = dynamic(() => import("@/components/layout/Footer"), { ssr: false });
 const ScrollProgress = dynamic(() => import("@/components/effects/ScrollProgress"), { ssr: false });
+const AIChatWidget = dynamic(() => import("@/components/chat/AIChatWidget"), { ssr: false });
 
 export default function ClientShell({ children }: { children: React.ReactNode }) {
   return (
@@ -22,6 +23,7 @@ export default function ClientShell({ children }: { children: React.ReactNode })
       <MouseGlow />
       <Navbar />
       {children}
+      <AIChatWidget />
       <Footer />
     </SmoothScrollProvider>
   );
